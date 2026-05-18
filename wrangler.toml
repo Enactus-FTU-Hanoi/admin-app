@@ -1,0 +1,12 @@
+name = "enactus-admin-app"
+main = "dist/index.js"
+compatibility_date = "2024-01-01"
+
+[env.production]
+routes = [
+  { pattern = "admin.enactusftuhanoi.id.vn/*", zone_name = "enactusftuhanoi.id.vn" }
+]
+
+[build]
+command = "npm run build"
+cwd = "./"
