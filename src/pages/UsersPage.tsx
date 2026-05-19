@@ -30,7 +30,7 @@ export function UsersPage() {
   const loadMembers = async () => {
     try {
       setLoading(true)
-      const data = await api<Member[]>('/members?status=' + filter.status + (filter.role ? '&role=' + filter.role : ''), { token })
+      const data = await api<Member[]>('/members?status=' + filter.status + (filter.role ? '&role=' + filter.role : ''))
       setMembers(data)
     } catch (e) {
       console.error(e)
@@ -42,7 +42,7 @@ export function UsersPage() {
   const handleAddMember = async () => {
     if (!form.name || !form.email || !form.password) return
     try {
-      await api('/members', { method: 'POST', body: form, token })
+      await api('/members', { method: 'POST', body: form })
       setForm({ name: '', email: '', password: '', role: 'member', generation: '', department: '', student_id: '' })
       setShowForm(false)
       loadMembers()
@@ -53,7 +53,7 @@ export function UsersPage() {
 
   const handleUpdateMember = async (memberId: string, updates: any) => {
     try {
-      await api(`/members/${memberId}`, { method: 'PATCH', body: updates, token })
+      await api(`/members/${memberId}`, { method: 'PATCH', body: updates })
       loadMembers()
     } catch (e) {
       alert('Lỗi: ' + (e instanceof Error ? e.message : 'Unknown error'))
