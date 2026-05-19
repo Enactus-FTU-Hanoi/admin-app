@@ -13,23 +13,27 @@ export function ScheduleAdminPage() {
   const [form, setForm] = useState({ title:'', description:'', deadline:'', slotsRaw:'' })
   const [saving, setSaving] = useState(false)
 
-  useEffect(() => {
-    api<any>('/schedule/polls/all')
-      .then(data => {
-        // Xử lý dữ liệu an toàn: nếu data là object có polls thì lấy polls, nếu là array thì dùng, không thì []
-        let pollsData: Poll[] = []
-        if (Array.isArray(data)) {
-          pollsData = data
-        } else if (data && typeof data === 'object' && Array.isArray(data.polls)) {
-          pollsData = data.polls
-        } else if (data && typeof data === 'object' && data.results) {
-          pollsData = data.results
-        }
-        setPolls(pollsData)
-      })
-      .catch(() => setPolls([]))
-      .finally(() => setLoading(false))
-  }, [])
+useEffect(() => {
+  api<any>('/schedule/polls/all')
+    .then(data => {
+      let pollsData: Poll[] = []
+      // Nếu data là array thì dùng trực tiếp
+      if (Array.isArray(data)) {
+        pollsData = data
+      } 
+      // Nếu data là object có polls property
+      else if (data && typeof data === 'object' && Array.isArray(data.polls)) {
+        pollsData = data.polls
+      }
+      // Nếu data là object có results property (trường hợp khác)
+      else if (data && typeof data === 'object' && Array.isArray(data.results)) {
+        pollsData = data.results
+      }
+      setPolls(pollsData)
+    })
+    .catch(() => setPolls([]))
+    .finally(() => setLoading(false))
+}, [])
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault(); setSaving(true)
