@@ -26,7 +26,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - run: npm ci
@@ -35,10 +35,7 @@ jobs:
         env:
           VITE_API_URL: https://api.enactusftuhanoi.id.vn
 
-      # SPA fallback
       - run: cp dist/index.html dist/404.html
-
-      # Custom domain
       - run: echo "admin.enactusftuhanoi.id.vn" > dist/CNAME
 
       - uses: actions/configure-pages@v5
