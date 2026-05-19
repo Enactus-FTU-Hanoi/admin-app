@@ -3,15 +3,15 @@ import { useAuth } from '../App'
 export type AdminPage = 'dashboard' | 'users' | 'tasks' | 'scores' | 'schedule' | 'cnb' | 'forms' | 'badges' | 'settings'
 
 const NAV: { id: AdminPage; label: string; icon: string; section?: string }[] = [
-  { id: 'dashboard', label: 'Dashboard',       icon: '⊞', section: 'Tổng quan' },
-  { id: 'users',     label: 'Thành viên',       icon: '◉' },
-  { id: 'tasks',     label: 'Tasks & Giao việc', icon: '✓', section: 'Quản lý' },
-  { id: 'scores',    label: 'Chấm điểm KPI',    icon: '◈' },
-  { id: 'schedule',  label: 'Lịch & Vote',       icon: '◷' },
-  { id: 'cnb',       label: 'C&B',               icon: '◎' },
-  { id: 'forms',     label: 'Form đăng ký',      icon: '▤' },
-  { id: 'badges',    label: 'Huy hiệu',          icon: '⬡', section: 'Hệ thống' },
-  { id: 'settings',  label: 'Cài đặt',           icon: '⚙' },
+  { id: 'dashboard', label: 'Dashboard',        icon: '📊', section: 'Tổng quan' },
+  { id: 'users',     label: 'Thành viên',        icon: '👥' },
+  { id: 'tasks',     label: 'Tasks & Giao việc', icon: '✅', section: 'Quản lý' },
+  { id: 'scores',    label: 'Chấm điểm KPI',     icon: '🏅' },
+  { id: 'schedule',  label: 'Lịch & Vote',        icon: '📅' },
+  { id: 'cnb',       label: 'C&B',                icon: '💰' },
+  { id: 'forms',     label: 'Form đăng ký',       icon: '📋' },
+  { id: 'badges',    label: 'Huy hiệu',           icon: '🏆', section: 'Hệ thống' },
+  { id: 'settings',  label: 'Cài đặt',            icon: '⚙️' },
 ]
 
 const PAGE_META: Record<AdminPage, { title: string; sub: string }> = {
@@ -41,7 +41,7 @@ export function AdminLayout({ page, onNavigate, children }: Props) {
     <div className="shell">
       <aside className="sidebar">
         <div className="sidebar-logo">
-          <div className="logo-mark">E</div>
+          <div className="logo-img">E</div>
           <div>
             <div className="logo-name">Enactus FTU</div>
             <div className="logo-sub">Admin Panel</div>
@@ -68,7 +68,7 @@ export function AdminLayout({ page, onNavigate, children }: Props) {
         </nav>
 
         <div className="sidebar-footer">
-          <button className="user-chip" onClick={() => {}}>
+          <button className="user-chip">
             <div className="av av-sm">{admin ? initials(admin.name) : '?'}</div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div className="user-chip-name">{admin?.name}</div>
@@ -76,7 +76,7 @@ export function AdminLayout({ page, onNavigate, children }: Props) {
             </div>
           </button>
           <button className="logout-btn" onClick={logout}>
-            <span>⟵</span> Đăng xuất
+            <span>🚪</span> Đăng xuất
           </button>
         </div>
       </aside>
