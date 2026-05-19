@@ -1,22 +1,26 @@
 import { useAuth } from '../App'
 
-export type AdminPage = 'dashboard' | 'users' | 'tasks' | 'scores' | 'schedule' | 'cnb' | 'forms' | 'badges' | 'settings'
+// THÊM 'clubs' VÀ 'profile' VÀO TYPE
+export type AdminPage = 'dashboard' | 'users' | 'tasks' | 'scores' | 'schedule' | 'cnb' | 'forms' | 'badges' | 'settings' | 'clubs' | 'profile'
 
 const NAV: { id: AdminPage; label: string; icon: string; section?: string }[] = [
   { id: 'dashboard', label: 'Dashboard',        icon: '📊', section: 'Tổng quan' },
   { id: 'users',     label: 'Thành viên',        icon: '👥' },
+  { id: 'clubs',     label: 'CLB',               icon: '🏛️' },  // THÊM MỚI
   { id: 'tasks',     label: 'Tasks & Giao việc', icon: '✅', section: 'Quản lý' },
   { id: 'scores',    label: 'Chấm điểm KPI',     icon: '🏅' },
-  { id: 'schedule',  label: 'Lịch & Vote',        icon: '📅' },
-  { id: 'cnb',       label: 'C&B',                icon: '💰' },
-  { id: 'forms',     label: 'Form đăng ký',       icon: '📋' },
-  { id: 'badges',    label: 'Huy hiệu',           icon: '🏆', section: 'Hệ thống' },
-  { id: 'settings',  label: 'Cài đặt',            icon: '⚙️' },
+  { id: 'schedule',  label: 'Lịch & Vote',       icon: '📅' },
+  { id: 'cnb',       label: 'C&B',               icon: '💰' },
+  { id: 'forms',     label: 'Form đăng ký',      icon: '📋' },
+  { id: 'badges',    label: 'Huy hiệu',          icon: '🏆', section: 'Hệ thống' },
+  { id: 'settings',  label: 'Cài đặt',           icon: '⚙️' },
+  { id: 'profile',   label: 'Hồ sơ',             icon: '👤' },  // THÊM MỚI
 ]
 
 const PAGE_META: Record<AdminPage, { title: string; sub: string }> = {
   dashboard: { title: 'Dashboard',           sub: 'Tổng quan hệ thống' },
   users:     { title: 'Quản lý thành viên',  sub: 'CRUD, phân quyền, trạng thái' },
+  clubs:     { title: 'Quản lý CLB',         sub: 'Danh sách và hoạt động CLB' },  // THÊM MỚI
   tasks:     { title: 'Tasks & Giao việc',   sub: 'Tạo và theo dõi task' },
   scores:    { title: 'Chấm điểm KPI',       sub: 'Ghi nhận điểm theo kỳ' },
   schedule:  { title: 'Lịch & Vote',         sub: 'Tạo poll và xem kết quả' },
@@ -24,6 +28,7 @@ const PAGE_META: Record<AdminPage, { title: string; sub: string }> = {
   forms:     { title: 'Form đăng ký',        sub: 'Tạo và quản lý form' },
   badges:    { title: 'Huy hiệu',            sub: 'Cấp và quản lý huy hiệu' },
   settings:  { title: 'Cài đặt hệ thống',   sub: 'Cấu hình chung' },
+  profile:   { title: 'Hồ sơ cá nhân',      sub: 'Thông tin tài khoản' },  // THÊM MỚI
 }
 
 function initials(name: string) {

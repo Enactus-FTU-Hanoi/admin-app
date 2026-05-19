@@ -1,5 +1,5 @@
 import { useEffect, useState, createContext, useContext } from 'react'
-import { AdminLayout } from './components/AdminLayout'
+import { AdminLayout, type AdminPage } from './components/AdminLayout'
 import { api } from './lib/api'
 import { LoginPage } from './pages/LoginPage'
 import { DashboardPage } from './pages/DashboardPage'
@@ -7,6 +7,12 @@ import { UsersPage } from './pages/UsersPage'
 import { ClubsPage } from './pages/ClubsPage'
 import { SettingsPage } from './pages/SettingsPage'
 import { ProfilePage } from './pages/ProfilePage'
+import { TasksAdminPage } from './pages/TasksAdminPage'
+import { ScoresAdminPage } from './pages/ScoresAdminPage'
+import { ScheduleAdminPage } from './pages/ScheduleAdminPage'
+import { CnbAdminPage } from './pages/CnbAdminPage'
+import { FormsAdminPage } from './pages/FormsAdminPage'
+import { BadgesAdminPage } from './pages/BadgesAdminPage'
 
 type Admin = {
   id: string
@@ -14,8 +20,6 @@ type Admin = {
   email: string
   role: string
 }
-
-type Page = 'dashboard' | 'users' | 'clubs' | 'settings' | 'profile'
 
 type AuthCtx = {
   admin: Admin | null
@@ -36,7 +40,7 @@ export const useAuth = () => useContext(AuthContext)
 export default function App() {
   const [admin, setAdmin] = useState<Admin | null>(null)
   const [token, setToken] = useState<string | null>(null)
-  const [page, setPage] = useState<Page>('dashboard')
+  const [page, setPage] = useState<AdminPage>('dashboard')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -88,10 +92,16 @@ export default function App() {
     )
   }
 
-  const pages: Record<Page, JSX.Element> = {
-    dashboard: <DashboardPage />, 
+  const pages: Record<AdminPage, JSX.Element> = {
+    dashboard: <DashboardPage />,
     users: <UsersPage />,
     clubs: <ClubsPage />,
+    tasks: <TasksAdminPage />,
+    scores: <ScoresAdminPage />,
+    schedule: <ScheduleAdminPage />,
+    cnb: <CnbAdminPage />,
+    forms: <FormsAdminPage />,
+    badges: <BadgesAdminPage />,
     settings: <SettingsPage />,
     profile: <ProfilePage />,
   }
