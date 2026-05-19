@@ -14,9 +14,20 @@ export function ScheduleAdminPage() {
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
-    api<any[]>('/schedule/polls/all')
-      .then(data => setPolls(Array.isArray(data) ? data : []))
-      .catch(() => setPolls([]))  // Fallback
+    api<any>('/schedule/polls/all')
+      .then(data => {
+        // Xử lý dữ liệu an toàn: nếu data là object có polls thì lấy polls, nếu là array thì dùng, không thì []
+        let pollsData: Poll[] = []
+        if (Array.isArray(data)) {
+          pollsData = data
+        } else if (data && typeof data === 'object' && Array.isArray(data.polls)) {
+          pollsData = data.polls
+        } else if (data && typeof data === 'object' && data.results) {
+          pollsData = data.results
+        }
+        setPolls(pollsData)
+      })
+      .catch(() => setPolls([]))
       .finally(() => setLoading(false))
   }, [])
 
@@ -30,8 +41,14 @@ export function ScheduleAdminPage() {
         time_slots: JSON.stringify(slots),
       }})
       setModal(null)
-      const p = await api<Poll[]>('/schedule/polls/all')
-      setPolls(p)
+      const p = await api<any>('/schedule/polls/all')
+      let pollsData: Poll[] = []
+      if (Array.isArray(p)) {
+        pollsData = p
+      } else if (p && typeof p === 'object' && Array.isArray(p.polls)) {
+        pollsData = p.polls
+      }
+      setPolls(pollsData)
     } catch(e:any) { alert(e.message) }
     finally { setSaving(false) }
   }
@@ -40,7 +57,7 @@ export function ScheduleAdminPage() {
     setSelected(poll)
     try {
       const r = await api<VoteResult[]>(`/schedule/polls/${poll.id}/results`)
-      setResults(r)
+      setResults(Array.isArray(r) ? r : [])
     } catch { setResults([]) }
     setModal('results')
   }
@@ -74,7 +91,14 @@ export function ScheduleAdminPage() {
       ) : (
         <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
           {polls.map(poll => {
-            const slots: string[] = (() => { try { return JSON.parse(poll.time_slots||'[]') } catch { return [] } })()
+            let slots: string[] = []
+            try {
+              if (typeof poll.time_slots === 'string') {
+                slots = JSON.parse(poll.time_slots || '[]')
+              } else if (Array.isArray(poll.time_slots)) {
+                slots = poll.time_slots
+              }
+            } catch { slots = [] }
             return (
               <div key={poll.id} className="card">
                 <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:12 }}>
@@ -161,11 +185,11 @@ export function ScheduleAdminPage() {
               <button className="close-btn" onClick={() => setModal(null)}>✕</button>
             </div>
             <div className="modal-body">
-              {results.length === 0 ? (
+              {!results || results.length === 0 ? (
                 <div className="empty" style={{padding:'24px 0'}}>Chưa có ai vote</div>
               ) : (
                 <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
-                  {results.sort((a,b) => b.count - a.count).map(r => (
+                  {[...results].sort((a,b) => b.count - a.count).map(r => (
                     <div key={r.slot}>
                       <div style={{ display:'flex', justifyContent:'space-between', marginBottom:6 }}>
                         <span style={{ fontWeight:600 }}>{r.slot}</span>
@@ -173,11 +197,11 @@ export function ScheduleAdminPage() {
                       </div>
                       <div className="progress-track" style={{ marginBottom:6 }}>
                         <div className="progress-fill" style={{
-                          width: `${results[0].count > 0 ? (r.count/results[0].count)*100 : 0}%`,
+                          width: `${results[0]?.count > 0 ? (r.count/results[0].count)*100 : 0}%`,
                           background: 'var(--amber)',
                         }} />
                       </div>
-                      <div style={{ fontSize:12, color:'var(--text-4)' }}>{r.voters?.join(', ')}</div>
+                      <div style={{ fontSize:12, color:'var(--text-4)' }}>{r.voters?.join(', ') || ''}</div>
                     </div>
                   ))}
                 </div>
