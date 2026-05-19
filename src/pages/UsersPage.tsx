@@ -13,7 +13,7 @@ interface FormData {
 }
 
 export function UsersPage() {
-  const { token } = useAuth()
+  const { token: _token } = useAuth()
   const [members, setMembers] = useState<Member[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
