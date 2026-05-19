@@ -46,9 +46,9 @@ export function DashboardPage() {
           <div className="card-head">
             <div className="card-title">Phân bố theo Department</div>
           </div>
-          {stats?.byDepartment?.length ? (
+          {(stats?.byDepartment || []).length > 0 ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-              {stats.byDepartment.slice(0, 7).map((d: any) => {
+              {(stats.byDepartment || []).slice(0, 7).map((d: any) => {
                 const pct = stats.total > 0 ? (d.count / stats.total) * 100 : 0
                 return (
                   <div key={d.department}>
@@ -70,9 +70,9 @@ export function DashboardPage() {
 
         <div className="card">
           <div className="card-head"><div className="card-title">Theo Năm Khoá</div></div>
-          {stats?.byGeneration?.length ? (
+          {(stats?.byGeneration || []).length > 0 ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {stats.byGeneration.map((g: any) => (
+              {(stats.byGeneration || []).map((g: any) => (
                 <div key={g.generation} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 14px', background: 'var(--surface)', borderRadius: 'var(--r-sm)', border: '1px solid var(--border)' }}>
                   <span style={{ fontSize: 13, fontWeight: 600 }}>{g.generation || 'N/A'}</span>
                   <span className="badge b-amber">{g.count} người</span>
