@@ -16,8 +16,13 @@ export function ScoresAdminPage() {
   const [filterPeriod, setFilterPeriod] = useState('all')
 
   useEffect(() => {
-    Promise.all([api<Score[]>('/scores/all'), api<Member[]>('/members')])
-      .then(([s, m]) => { setScores(s); setMembers(m) }).catch(console.error).finally(() => setLoading(false))
+    Promise.all([
+      api<any[]>('/scores/all').catch(() => []),
+      api<any[]>('/members').catch(() => [])
+    ]).then(([s, m]) => { 
+      setScores(Array.isArray(s) ? s : []); 
+      setMembers(Array.isArray(m) ? m : []);
+    }).catch(console.error).finally(() => setLoading(false))
   }, [])
 
   const periods = ['all', ...Array.from(new Set(scores.map(s => s.period))).sort().reverse()]

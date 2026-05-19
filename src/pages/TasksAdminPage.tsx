@@ -31,9 +31,12 @@ export function TasksAdminPage() {
 
   useEffect(() => {
     Promise.all([
-      api<Task[]>('/tasks/all'),
-      api<Member[]>('/members'),
-    ]).then(([t, m]) => { setTasks(t); setMembers(m) }).catch(console.error).finally(() => setLoading(false))
+      api<any[]>('/tasks/all').catch(() => []),  // Fallback nếu lỗi
+      api<any[]>('/members').catch(() => [])
+    ]).then(([t, m]) => { 
+      setTasks(Array.isArray(t) ? t : []); 
+      setMembers(Array.isArray(m) ? m : []);
+    }).catch(console.error).finally(() => setLoading(false))
   }, [])
 
   const filtered = tasks.filter(t => {

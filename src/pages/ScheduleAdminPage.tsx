@@ -14,7 +14,10 @@ export function ScheduleAdminPage() {
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
-    api<Poll[]>('/schedule/polls/all').then(setPolls).catch(console.error).finally(() => setLoading(false))
+    api<any[]>('/schedule/polls/all')
+      .then(data => setPolls(Array.isArray(data) ? data : []))
+      .catch(() => setPolls([]))  // Fallback
+      .finally(() => setLoading(false))
   }, [])
 
   const save = async (e: React.FormEvent) => {

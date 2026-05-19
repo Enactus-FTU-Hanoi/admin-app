@@ -6,7 +6,6 @@ export type AdminPage = 'dashboard' | 'users' | 'tasks' | 'scores' | 'schedule' 
 const NAV: { id: AdminPage; label: string; icon: string; section?: string }[] = [
   { id: 'dashboard', label: 'Dashboard',        icon: '📊', section: 'Tổng quan' },
   { id: 'users',     label: 'Thành viên',        icon: '👥' },
-  { id: 'clubs',     label: 'CLB',               icon: '🏛️' },  // THÊM MỚI
   { id: 'tasks',     label: 'Tasks & Giao việc', icon: '✅', section: 'Quản lý' },
   { id: 'scores',    label: 'Chấm điểm KPI',     icon: '🏅' },
   { id: 'schedule',  label: 'Lịch & Vote',       icon: '📅' },
