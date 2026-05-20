@@ -17,6 +17,7 @@ import {
   Upload,
   Download,
   Info,
+  AlertCircle,  // ✅ THÊM DÒNG NÀY
   type LucideIcon
 } from 'lucide-react'
 
@@ -39,6 +40,7 @@ export type IconName =
   | 'Upload'
   | 'Download'
   | 'Info'
+  | 'AlertCircle'  // ✅ THÊM DÒNG NÀY
 
 const iconMap: Record<IconName, LucideIcon> = {
   LayoutDashboard,
@@ -59,6 +61,7 @@ const iconMap: Record<IconName, LucideIcon> = {
   Upload,
   Download,
   Info,
+  AlertCircle,  // ✅ THÊM DÒNG NÀY
 }
 
 interface IconProps {
