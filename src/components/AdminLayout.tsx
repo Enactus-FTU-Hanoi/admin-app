@@ -1,33 +1,30 @@
 import { useAuth } from '../App'
+import { Icon, IconName } from './Icon'
 
-// THÊM 'clubs' VÀ 'profile' VÀO TYPE
-export type AdminPage = 'dashboard' | 'users' | 'tasks' | 'scores' | 'schedule' | 'cnb' | 'forms' | 'badges' | 'settings' | 'clubs' | 'profile'
+export type AdminPage = 'dashboard' | 'users' | 'tasks' | 'scores' | 'schedule' | 'cnb' | 'forms' | 'badges' | 'settings'
 
-const NAV: { id: AdminPage; label: string; icon: string; section?: string }[] = [
-  { id: 'dashboard', label: 'Dashboard',        icon: '📊', section: 'Tổng quan' },
-  { id: 'users',     label: 'Thành viên',        icon: '👥' },
-  { id: 'tasks',     label: 'Tasks & Giao việc', icon: '✅', section: 'Quản lý' },
-  { id: 'scores',    label: 'Chấm điểm KPI',     icon: '🏅' },
-  { id: 'schedule',  label: 'Lịch & Vote',       icon: '📅' },
-  { id: 'cnb',       label: 'C&B',               icon: '💰' },
-  { id: 'forms',     label: 'Form đăng ký',      icon: '📋' },
-  { id: 'badges',    label: 'Huy hiệu',          icon: '🏆', section: 'Hệ thống' },
-  { id: 'settings',  label: 'Cài đặt',           icon: '⚙️' },
-  { id: 'profile',   label: 'Hồ sơ',             icon: '👤' },  // THÊM MỚI
+const NAV: { id: AdminPage; label: string; icon: IconName; section?: string }[] = [
+  { id: 'dashboard', label: 'Dashboard', icon: 'LayoutDashboard', section: 'Tổng quan' },
+  { id: 'users', label: 'Thành viên', icon: 'Users' },
+  { id: 'tasks', label: 'Tasks & Giao việc', icon: 'CheckSquare', section: 'Quản lý' },
+  { id: 'scores', label: 'Chấm điểm KPI', icon: 'Award' },
+  { id: 'schedule', label: 'Lịch & Vote', icon: 'Calendar' },
+  { id: 'cnb', label: 'C&B', icon: 'Wallet' },
+  { id: 'forms', label: 'Form đăng ký', icon: 'FormInput' },
+  { id: 'badges', label: 'Huy hiệu', icon: 'Medal', section: 'Hệ thống' },
+  { id: 'settings', label: 'Cài đặt', icon: 'Settings' },
 ]
 
 const PAGE_META: Record<AdminPage, { title: string; sub: string }> = {
-  dashboard: { title: 'Dashboard',           sub: 'Tổng quan hệ thống' },
-  users:     { title: 'Quản lý thành viên',  sub: 'CRUD, phân quyền, trạng thái' },
-  clubs:     { title: 'Quản lý CLB',         sub: 'Danh sách và hoạt động CLB' },  // THÊM MỚI
-  tasks:     { title: 'Tasks & Giao việc',   sub: 'Tạo và theo dõi task' },
-  scores:    { title: 'Chấm điểm KPI',       sub: 'Ghi nhận điểm theo kỳ' },
-  schedule:  { title: 'Lịch & Vote',         sub: 'Tạo poll và xem kết quả' },
-  cnb:       { title: 'C&B Management',      sub: 'Phúc lợi và khấu trừ' },
-  forms:     { title: 'Form đăng ký',        sub: 'Tạo và quản lý form' },
-  badges:    { title: 'Huy hiệu',            sub: 'Cấp và quản lý huy hiệu' },
-  settings:  { title: 'Cài đặt hệ thống',   sub: 'Cấu hình chung' },
-  profile:   { title: 'Hồ sơ cá nhân',      sub: 'Thông tin tài khoản' },  // THÊM MỚI
+  dashboard: { title: 'Dashboard', sub: 'Tổng quan hệ thống' },
+  users: { title: 'Quản lý thành viên', sub: 'CRUD, phân quyền, trạng thái' },
+  tasks: { title: 'Tasks & Giao việc', sub: 'Tạo và theo dõi task' },
+  scores: { title: 'Chấm điểm KPI', sub: 'Ghi nhận điểm theo kỳ' },
+  schedule: { title: 'Lịch & Vote', sub: 'Tạo poll và xem kết quả' },
+  cnb: { title: 'C&B Management', sub: 'Phúc lợi và khấu trừ' },
+  forms: { title: 'Form đăng ký', sub: 'Tạo và quản lý form' },
+  badges: { title: 'Huy hiệu', sub: 'Cấp và quản lý huy hiệu' },
+  settings: { title: 'Cài đặt hệ thống', sub: 'Cấu hình chung' },
 }
 
 function initials(name: string) {
@@ -45,9 +42,11 @@ export function AdminLayout({ page, onNavigate, children }: Props) {
     <div className="shell">
       <aside className="sidebar">
         <div className="sidebar-logo">
-          <div className="logo-img">E</div>
+          <div className="logo-icon">
+            <Icon name="Sparkles" size={18} color="#FFFFFF" />
+          </div>
           <div>
-            <div className="logo-name">Enactus FTU</div>
+            <div className="logo-text">Enactus FTU</div>
             <div className="logo-sub">Admin Panel</div>
           </div>
         </div>
@@ -63,7 +62,7 @@ export function AdminLayout({ page, onNavigate, children }: Props) {
                   className={`nav-item${page === item.id ? ' active' : ''}`}
                   onClick={() => onNavigate(item.id)}
                 >
-                  <span className="nav-icon">{item.icon}</span>
+                  <Icon name={item.icon} size={18} className="nav-icon" />
                   {item.label}
                 </button>
               </div>
@@ -73,14 +72,15 @@ export function AdminLayout({ page, onNavigate, children }: Props) {
 
         <div className="sidebar-footer">
           <button className="user-chip">
-            <div className="av av-sm">{admin ? initials(admin.name) : '?'}</div>
+            <div className="avatar avatar-sm">{admin ? initials(admin.name) : '?'}</div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div className="user-chip-name">{admin?.name}</div>
               <div className="user-chip-role">{admin?.role === 'super_admin' ? 'Super Admin' : 'Admin'}</div>
             </div>
           </button>
           <button className="logout-btn" onClick={logout}>
-            <span>🚪</span> Đăng xuất
+            <Icon name="LogOut" size={16} />
+            Đăng xuất
           </button>
         </div>
       </aside>
@@ -92,8 +92,11 @@ export function AdminLayout({ page, onNavigate, children }: Props) {
             <div className="topbar-sub">{meta.sub}</div>
           </div>
           <div className="topbar-right">
-            <button className="icon-btn">🔔<span className="notif-dot" /></button>
-            <div className="av av-md">{admin ? initials(admin.name) : '?'}</div>
+            <button className="icon-btn">
+              <Icon name="Bell" size={18} />
+              <span className="notif-dot" />
+            </button>
+            <div className="avatar avatar-md">{admin ? initials(admin.name) : '?'}</div>
           </div>
         </header>
         <div className="page">
