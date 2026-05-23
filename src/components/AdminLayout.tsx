@@ -4,27 +4,27 @@ import { Icon, IconName } from './Icon'
 export type AdminPage = 'dashboard' | 'users' | 'tasks' | 'scores' | 'schedule' | 'cnb' | 'forms' | 'badges' | 'settings'
 
 const NAV: { id: AdminPage; label: string; icon: IconName; section?: string }[] = [
-  { id: 'dashboard', label: 'Dashboard', icon: 'LayoutDashboard', section: 'Tổng quan' },
-  { id: 'users', label: 'Thành viên', icon: 'Users' },
-  { id: 'tasks', label: 'Tasks & Giao việc', icon: 'CheckSquare', section: 'Quản lý' },
-  { id: 'scores', label: 'Chấm điểm KPI', icon: 'Award' },
-  { id: 'schedule', label: 'Lịch & Vote', icon: 'Calendar' },
-  { id: 'cnb', label: 'C&B', icon: 'Wallet' },
-  { id: 'forms', label: 'Form đăng ký', icon: 'FormInput' },
-  { id: 'badges', label: 'Huy hiệu', icon: 'Medal', section: 'Hệ thống' },
-  { id: 'settings', label: 'Cài đặt', icon: 'Settings' },
+  { id: 'dashboard', label: 'Dashboard',        icon: 'LayoutDashboard', section: 'Tổng quan' },
+  { id: 'users',     label: 'Thành viên',        icon: 'Users' },
+  { id: 'tasks',     label: 'Tasks & Giao việc', icon: 'CheckSquare', section: 'Quản lý' },
+  { id: 'scores',    label: 'Chấm điểm KPI',     icon: 'BarChart3' },
+  { id: 'schedule',  label: 'Lịch & Vote',        icon: 'Calendar' },
+  { id: 'cnb',       label: 'C&B',                icon: 'CreditCard' },
+  { id: 'forms',     label: 'Form đăng ký',       icon: 'FileText' },
+  { id: 'badges',    label: 'Huy hiệu',           icon: 'Medal', section: 'Hệ thống' },
+  { id: 'settings',  label: 'Cài đặt',            icon: 'Settings' },
 ]
 
 const PAGE_META: Record<AdminPage, { title: string; sub: string }> = {
-  dashboard: { title: 'Dashboard', sub: 'Tổng quan hệ thống' },
-  users: { title: 'Quản lý thành viên', sub: 'CRUD, phân quyền, trạng thái' },
-  tasks: { title: 'Tasks & Giao việc', sub: 'Tạo và theo dõi task' },
-  scores: { title: 'Chấm điểm KPI', sub: 'Ghi nhận điểm theo kỳ' },
-  schedule: { title: 'Lịch & Vote', sub: 'Tạo poll và xem kết quả' },
-  cnb: { title: 'C&B Management', sub: 'Phúc lợi và khấu trừ' },
-  forms: { title: 'Form đăng ký', sub: 'Tạo và quản lý form' },
-  badges: { title: 'Huy hiệu', sub: 'Cấp và quản lý huy hiệu' },
-  settings: { title: 'Cài đặt hệ thống', sub: 'Cấu hình chung' },
+  dashboard: { title: 'Dashboard',           sub: 'Tổng quan hệ thống' },
+  users:     { title: 'Quản lý thành viên',  sub: 'CRUD, phân quyền, trạng thái' },
+  tasks:     { title: 'Tasks & Giao việc',   sub: 'Tạo và theo dõi task' },
+  scores:    { title: 'Chấm điểm KPI',       sub: 'Ghi nhận điểm theo kỳ' },
+  schedule:  { title: 'Lịch & Vote',         sub: 'Tạo poll và xem kết quả' },
+  cnb:       { title: 'C&B Management',      sub: 'Phúc lợi và khấu trừ' },
+  forms:     { title: 'Form đăng ký',        sub: 'Tạo và quản lý form' },
+  badges:    { title: 'Huy hiệu',            sub: 'Cấp và quản lý huy hiệu' },
+  settings:  { title: 'Cài đặt hệ thống',   sub: 'Cấu hình chung' },
 }
 
 function initials(name: string) {
@@ -43,7 +43,7 @@ export function AdminLayout({ page, onNavigate, children }: Props) {
       <aside className="sidebar">
         <div className="sidebar-logo">
           <div className="logo-icon">
-            <Icon name="Sparkles" size={18} color="#FFFFFF" />
+            <Icon name="ShieldCheck" size={16} color="#fff" />
           </div>
           <div>
             <div className="logo-text">Enactus FTU</div>
@@ -62,7 +62,7 @@ export function AdminLayout({ page, onNavigate, children }: Props) {
                   className={`nav-item${page === item.id ? ' active' : ''}`}
                   onClick={() => onNavigate(item.id)}
                 >
-                  <Icon name={item.icon} size={18} className="nav-icon" />
+                  <Icon name={item.icon} size={17} className="nav-icon" />
                   {item.label}
                 </button>
               </div>
@@ -79,7 +79,7 @@ export function AdminLayout({ page, onNavigate, children }: Props) {
             </div>
           </button>
           <button className="logout-btn" onClick={logout}>
-            <Icon name="LogOut" size={16} />
+            <Icon name="LogOut" size={15} />
             Đăng xuất
           </button>
         </div>
@@ -93,7 +93,7 @@ export function AdminLayout({ page, onNavigate, children }: Props) {
           </div>
           <div className="topbar-right">
             <button className="icon-btn">
-              <Icon name="Bell" size={18} />
+              <Icon name="Bell" size={17} />
               <span className="notif-dot" />
             </button>
             <div className="avatar avatar-md">{admin ? initials(admin.name) : '?'}</div>
